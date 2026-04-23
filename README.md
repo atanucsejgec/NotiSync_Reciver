@@ -1,9 +1,11 @@
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;customColorList=6,11,20&amp;height=200&amp;section=header&amp;text=NotiSync%20Receiver&amp;fontSize=50&amp;fontColor=fff&amp;animation=twinkling&amp;fontAlignY=35&amp;desc=Real-time%20Notification%20%26%20Location%20Sync%20for%20Android&amp;descAlignY=60&amp;descColor=fff" />
+<img src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;customColorList=6,11,20&amp;height=200&amp;section=header&amp;text=NotiSync%20Receiver&amp;fontSize=50&amp;fontColor=fff&amp;animation=twinkling&amp;fontAlignY=35&amp;desc=Real-time%20Notification%20and%20Location%20Sync%20for%20Android&amp;descAlignY=60&amp;descColor=fff" />
 
 </div>
+
+
 
 [![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0-success?style=for-the-badge)](https://github.com/atanucsejgec/NotiSync_Reciver/releases)
