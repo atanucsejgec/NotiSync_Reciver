@@ -91,8 +91,8 @@ fun NotificationListScreen(
                 TopAppBar(
                     title = {
                         Text(
-                            text = "${selectedIds.size} selected",
-                            style = MaterialTheme.typography.titleLarge,
+                            text = "${selectedIds.size} Selected",
+                            style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold
                         )
                     },
@@ -139,16 +139,17 @@ fun NotificationListScreen(
                         Column {
                             Text(
                                 text = viewModel.deviceName,
-                                style = MaterialTheme.typography.titleLarge,
+                                style = MaterialTheme.typography.headlineSmall,
                                 fontWeight = FontWeight.Bold,
                                 maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
+                                overflow = TextOverflow.Ellipsis,
+                                color = MaterialTheme.colorScheme.primary
                             )
                             if (unreadCount > 0) {
                                 Text(
                                     text = "$unreadCount unread",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.primary
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.secondary
                                 )
                             }
                         }
@@ -197,10 +198,10 @@ fun NotificationListScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                        .padding(horizontal = 20.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    item { Spacer(modifier = Modifier.height(8.dp)) }
+                    item { Spacer(modifier = Modifier.height(12.dp)) }
 
                     items(
                         items = notifications,

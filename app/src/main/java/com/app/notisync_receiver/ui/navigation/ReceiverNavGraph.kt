@@ -5,6 +5,7 @@
 
 package com.app.notisync_receiver.ui.navigation
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
@@ -119,11 +120,12 @@ fun ReceiverNavGraph(
     }
 
     Scaffold(
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
             if (showBottomBar && deviceId != null && deviceName != null) {
                 NavigationBar {
                     val items = listOf(
-                        Triple(ReceiverRoutes.NOTIFICATION_LIST, Icons.Default.Notifications, "Notifications"),
+                        Triple(ReceiverRoutes.NOTIFICATION_LIST, Icons.Default.Notifications, "Notification"),
                         Triple(ReceiverRoutes.LOCATION, Icons.Default.LocationOn, "Location"),
                         Triple(ReceiverRoutes.CALL_LOGS, Icons.Default.Call, "Calls"),
                         Triple(ReceiverRoutes.KEYBOARD, Icons.Default.Keyboard, "Keyboard")
@@ -156,11 +158,11 @@ fun ReceiverNavGraph(
                 }
             }
         }
-    ) { innerPadding ->
+    ) { _ ->
         NavHost(
             navController = navController,
             startDestination = startDestination,
-            modifier = modifier.padding(innerPadding)
+            modifier = modifier
         ) {
             composable(ReceiverRoutes.LOGIN) {
                 LoginScreen(

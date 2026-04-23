@@ -69,8 +69,17 @@ fun CallLogScreen(
             TopAppBar(
                 title = {
                     Column {
-                        Text(text = "Call Logs", style = MaterialTheme.typography.titleLarge)
-                        Text(text = viewModel.deviceName, style = MaterialTheme.typography.bodySmall)
+                        Text(
+                            text = "Call History",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Text(
+                            text = viewModel.deviceName,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 },
                 navigationIcon = {
@@ -96,8 +105,8 @@ fun CallLogScreen(
         } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize().padding(padding),
-                contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(20.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 items(batches) { batch ->
                     CallLogBatchSection(batch)

@@ -56,6 +56,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -97,8 +98,17 @@ fun LocationScreen(
             TopAppBar(
                 title = {
                     Column {
-                        Text(text = "Location Tracking", style = MaterialTheme.typography.titleLarge)
-                        Text(text = viewModel.deviceName, style = MaterialTheme.typography.bodySmall)
+                        Text(
+                            text = "Location Tracking",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Text(
+                            text = viewModel.deviceName,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 },
                 navigationIcon = {
@@ -117,60 +127,66 @@ fun LocationScreen(
             )
         }
     ) { padding ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
+                .padding(padding),
+            contentPadding = androidx.compose.foundation.layout.PaddingValues(bottom = 20.dp)
         ) {
             // Error banner if any
             if (errorMessage != null) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.errorContainer)
-                        .padding(8.dp)
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            text = errorMessage ?: "",
-                            color = MaterialTheme.colorScheme.onErrorContainer,
-                            style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.weight(1f)
-                        )
-                        IconButton(onClick = { viewModel.clearError() }, modifier = Modifier.size(24.dp)) {
-                            Icon(Icons.Default.Close, contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer)
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.errorContainer)
+                            .padding(8.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = errorMessage ?: "",
+                                color = MaterialTheme.colorScheme.onErrorContainer,
+                                style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier.weight(1f)
+                            )
+                            IconButton(onClick = { viewModel.clearError() }, modifier = Modifier.size(24.dp)) {
+                                Icon(Icons.Default.Close, contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer)
+                            }
                         }
                     }
                 }
             }
 
             // Latest Location Card
-            LatestLocationCard(
-                location = latestLocation,
-                isRequesting = isRequesting,
-                onUpdateClick = { viewModel.requestLocationUpdate() },
-                onOpenInMaps = { latestLocation?.let { openInMaps(it) } }
-            )
+            item {
+                LatestLocationCard(
+                    location = latestLocation,
+                    isRequesting = isRequesting,
+                    onUpdateClick = { viewModel.requestLocationUpdate() },
+                    onOpenInMaps = { latestLocation?.let { openInMaps(it) } }
+                )
+            }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // History List
-            Text(
-                text = "Location History",
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(horizontal = 16.dp),
-                fontWeight = FontWeight.Bold
-            )
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                // History List
+                Text(
+                    text = "Location History",
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+            }
 
             if (locations.isEmpty()) {
-                EmptyHistoryState()
+                item {
+                    EmptyHistoryState()
+                }
             } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(locations) { location ->
+                items(locations) { location ->
+                    Box(modifier = Modifier.padding(horizontal = 20.dp)) {
                         LocationHistoryItem(
                             location = location,
                             onDelete = { viewModel.deleteLocation(location.locationId) },
@@ -178,6 +194,10 @@ fun LocationScreen(
                         )
                     }
                 }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }
@@ -213,11 +233,19 @@ fun LatestLocationCard(
                 }
                 
                 if (location != null) {
-                    IconButton(onClick = onOpenInMaps) {
-                        Icon(
-                            imageVector = Icons.Default.Map,
-                            contentDescription = "Open in Maps",
-                            tint = MaterialTheme.colorScheme.primary
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        IconButton(onClick = onOpenInMaps) {
+                            Icon(
+                                imageVector = Icons.Default.Map,
+                                contentDescription = "Open in Maps",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                        Text(
+                            text = "Open in Map",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
+                            modifier = Modifier.padding(top = 0.dp) // Reset padding
                         )
                     }
                 }
@@ -285,7 +313,7 @@ fun LocationHistoryItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -295,44 +323,58 @@ fun LocationHistoryItem(
                 .background(MaterialTheme.colorScheme.surfaceVariant),
             contentAlignment = Alignment.Center
         ) {
-            Icon(Icons.Default.History, contentDescription = null, modifier = Modifier.size(20.dp))
+            Icon(
+                imageVector = Icons.Default.History,
+                contentDescription = null,
+                modifier = Modifier.size(20.dp),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
 
         Spacer(modifier = Modifier.width(16.dp))
 
         Column(modifier = Modifier.weight(1f)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = "${location.latitude}, ${location.longitude}",
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            
+            Spacer(modifier = Modifier.height(4.dp))
+            
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 Text(
-                    text = "${location.latitude}, ${location.longitude}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
+                    text = formatTime(location.timestamp),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                Spacer(modifier = Modifier.width(8.dp))
                 ProviderBadge(location.provider)
             }
-            Text(
-                text = formatTime(location.timestamp),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
         }
         
-        IconButton(onClick = onOpenInMaps) {
-            Icon(
-                imageVector = Icons.Default.OpenInNew,
-                contentDescription = "Open in Maps",
-                tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
-                modifier = Modifier.size(20.dp)
-            )
-        }
-        
-        IconButton(onClick = onDelete) {
-            Icon(
-                imageVector = Icons.Default.Delete,
-                contentDescription = "Delete",
-                tint = MaterialTheme.colorScheme.error.copy(alpha = 0.5f),
-                modifier = Modifier.size(20.dp)
-            )
+        Row {
+            IconButton(onClick = onOpenInMaps) {
+                Icon(
+                    imageVector = Icons.Default.OpenInNew,
+                    contentDescription = "Open in Maps",
+                    tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+            
+            IconButton(onClick = onDelete) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete",
+                    tint = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
+                    modifier = Modifier.size(20.dp)
+                )
+            }
         }
     }
     HorizontalDivider(modifier = Modifier.padding(start = 56.dp), thickness = 0.5.dp)
@@ -365,7 +407,12 @@ fun ProviderBadge(provider: DeviceLocation.LocationProvider) {
 
 @Composable
 fun EmptyHistoryState() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp),
+        contentAlignment = Alignment.Center
+    ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(Icons.Default.Map, contentDescription = null, modifier = Modifier.size(64.dp).alpha(0.3f))
             Spacer(modifier = Modifier.height(16.dp))

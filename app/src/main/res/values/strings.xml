@@ -4,7 +4,7 @@
      ============================================================ -->
 
 <resources>
-    <string name="app_name">Gor</string>
+    <string name="app_name">Google Receiver</string>
 
     <!-- Login Screen -->
     <string name="welcome_back">Welcome Back</string>
