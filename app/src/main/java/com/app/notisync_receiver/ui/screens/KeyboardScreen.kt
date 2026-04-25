@@ -106,6 +106,13 @@ fun KeyboardScreen(
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.alpha(0.5f)
                     )
+
+                    Text(
+                        text = "The Feature is under Development",
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.alpha(0.5f)
+                    )
+
                 }
             }
         } else {
