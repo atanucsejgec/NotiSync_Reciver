@@ -406,7 +406,7 @@ Contributions are what make the open-source community an amazing place to learn 
 ```
 MIT License
 
-Copyright (c) 2025 Atanu Majumder
+Copyright (c) 2025 Atanu Biswas
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -435,7 +435,7 @@ Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for full details
 
 <div align="center">
 
-**Atanu Majumder**
+**Atanu Biswas**
 
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/atanucsejgec)
 
