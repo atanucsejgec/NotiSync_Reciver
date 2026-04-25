@@ -106,7 +106,7 @@ fun KeyboardScreen(
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.alpha(0.5f)
                     )
-
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "The Feature is under Development",
                         style = MaterialTheme.typography.bodyLarge,
